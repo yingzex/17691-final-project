@@ -77,17 +77,25 @@ def predict(input_data):
     return prediction
 
 # Display prediction result
-if submit_button:
-    input_data = [
-        weekly_cases, year, weekly_cases_per_million, weekly_deaths,
-        weekly_deaths_per_million, total_vaccinations, people_vaccinated,
-        people_fully_vaccinated, total_boosters, daily_vaccinations,
-        total_vaccinations_per_hundred, people_vaccinated_per_hundred,
-        people_fully_vaccinated_per_hundred, total_boosters_per_hundred,
-        daily_vaccinations_per_hundred, daily_people_vaccinated,
-        daily_people_vaccinated_per_hundred
-    ] + list(continent_data.values())
+import logging
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
-    print(input_data)
-    result = predict(input_data)
-    st.write('Predicted death:', result)
+try:
+    if submit_button:
+        input_data = [
+            weekly_cases, year, weekly_cases_per_million, weekly_deaths,
+            weekly_deaths_per_million, total_vaccinations, people_vaccinated,
+            people_fully_vaccinated, total_boosters, daily_vaccinations,
+            total_vaccinations_per_hundred, people_vaccinated_per_hundred,
+            people_fully_vaccinated_per_hundred, total_boosters_per_hundred,
+            daily_vaccinations_per_hundred, daily_people_vaccinated,
+            daily_people_vaccinated_per_hundred
+        ] + list(continent_data.values())
+
+        print(input_data)
+        result = predict(input_data)
+        st.write('Predicted death:', result)
+except Exception as e:
+    logging.error("Error occurred", exc_info=True)
+
+
